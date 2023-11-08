@@ -1,3 +1,4 @@
+#Margareth Ramirez Valenzuela, Ana María Vargas
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
