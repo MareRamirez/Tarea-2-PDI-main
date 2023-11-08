@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+from PIL import Image
+
 
 #########################################################################################################
 
@@ -184,35 +186,33 @@ plt.show()
 # mapa de colores utilice la función get cmap disponible en la biblioteca matplotlib. Asigne los
 # valores RGB del mapa a los píxeles que comparten el mismo nivel de cuantificación.
 
-# Mapa de colores de Matplotlib
-cool_map = plt.get_cmap('cool')
+# Asumiendo que `im` es tu objeto de imagen de PIL cargado correctamente
+lvls = 2
+lvls2 = 8
 
-# Función para aplicar los colores a la imagen
-def apply_cool_colormap(image):
-    normalized_img = image / image.max()
-    cool_image = cool_map(normalized_img)
-    return (cool_image[:, :, :3] * 255).astype('uint8')  # Convierte a RGB
+# Realiza la cuantificación de la imagen a los niveles de colores especificados
+im_quan = im.quantize(lvls)
+im_quan2 = im.quantize(lvls2)
 
-# Aplica el color a cada imagen
-img_media_16_color = apply_cool_colormap(img_media_16)
-img_mediana_16_color = apply_cool_colormap(img_mediana_16)
-img_gauss_16_color = apply_cool_colormap(img_gauss_16)
+# Para visualizar las imágenes cuantificadas en una figura de Matplotlib
+import matplotlib.pyplot as plt
 
-# Establece el espacio para mostrar las imágenes
-fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+# Configura la figura de Matplotlib para mostrar las imágenes cuantificadas
+fig, axs = plt.subplots(1, 2, figsize=(10, 5))  # Ajusta la figura a una fila y dos columnas
 
-# Muestra las imágenes en sus espacios correspondientes
-axes[0].imshow(img_media_16_color)
-axes[0].set_title('Media 16 Tortuga 1')
-axes[0].axis('off')  # Oculta los ejes
-axes[1].imshow(img_mediana_16_color)
-axes[1].set_title('Mediana 16 Tortuga 1')
-axes[1].axis('off')  
-axes[2].imshow(img_gauss_16_color)
-axes[2].set_title('Gaussiano 16 Tortuga 1')
-axes[2].axis('off')  
+# Mostrar la imagen cuantificada con 'lvls' colores
+axs[0].imshow(im_quan)
+axs[0].set_title(f'Cuantificación a {lvls} Niveles')
 
-# Muestra todas las tortugas de colores
+# Mostrar la imagen cuantificada con 'lvls2' colores
+axs[1].imshow(im_quan2)
+axs[1].set_title(f'Cuantificación a {lvls2} Niveles')
+
+# Ocultar los ejes para ambas imágenes
+for ax in axs:
+    ax.axis('off')
+
+# Mostrar la ventana con los subplots
 plt.show()
 
 
