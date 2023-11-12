@@ -103,6 +103,58 @@ plt.show()
 # verdes. Escoja la imagen de bordes obtenida en 2.c) que considere mejor. Recuerde que para
 # realizar esto, es necesario trabajar cada canal por separado. 
 
+# Asumimos que 'img' es la imagen original y 'prewitt' es la imagen de bordes obtenida con el filtro de Prewitt.
+
+# Convertir la imagen original a tonos de verde
+# Esto se hace poniendo los canales rojo y azul en cero y dejando el canal verde como está
+img_verde = np.zeros_like(img)
+img_verde[:, :, 1] = img[:, :, 1]  # Mantener solo el canal verde
+
+# Ahora, necesitamos resaltar los bordes en amarillo
+# Esto se logra asegurándose de que, donde haya bordes, los canales rojo y verde sean altos y el azul sea bajo o cero
+# Primero, normalizamos la imagen de bordes para que su rango sea entre 0 y 255
+prewitt_normalizado = (prewitt / prewitt.max()) * 255
+prewitt_normalizado = prewitt_normalizado.astype(np.uint8)
+
+# Crear una máscara donde existan bordes
+mask_bordes = prewitt_normalizado > 0
+
+# Donde hay bordes, establecer el canal rojo y verde al valor del borde (para hacer amarillo), y dejar el azul en cero
+img_rgb = img_verde.copy()
+img_rgb[mask_bordes] = [255, 255, 0]  # Amarillo (rojo y
+                                        # verde altos, azul bajo)
+
+# Mostrar la imagen RGB
+plt.figure(figsize=(10, 5))
+plt.imshow(img_rgb)
+plt.title('Imagen RGB')
+plt.axis('off')
+plt.show()
+                                      
 
 
+
+
+
+
+
+
+# # Se crea una imagen RGB con las dimensiones de la imagen original
+# img_rgb = np.zeros((img.shape[0], img.shape[1], 3), dtype=np.uint8)
+
+# # Se asigna el canal verde de la imagen original al canal verde de la imagen RGB
+# img_rgb[:, :, 1] = img[:, :, 1]
+
+# # Se asigna el canal rojo de la imagen de bordes al canal rojo de la imagen RGB
+# img_rgb[:, :, 0] = np.abs(prewitt)
+
+# # Se asigna el canal azul de la imagen de bordes al canal azul de la imagen RGB
+# img_rgb[:, :, 2] = np.abs(prewitt)
+
+# # Se muestra la imagen RGB
+# plt.figure(figsize=(10, 5))
+# plt.imshow(img_rgb)
+# plt.title('Imagen RGB')
+# plt.axis('off')
+# plt.show()
 
