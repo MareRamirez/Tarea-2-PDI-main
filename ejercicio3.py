@@ -22,20 +22,20 @@ import matplotlib
 img = cv2.imread('tortugas1.jpg',0)
 img2 = cv2.imread('tortugas2.jpeg',0)
 
-# # Despliegue de imagenes
-# plt.figure(figsize=(10, 5))  # Ajusta el tamaño de la figura
-# plt.subplot(1, 2, 1)  # Define que en la pantalla se mostrarán una fila y dos columnas
-# plt.imshow(img, cmap='gray')  # Muestra la imagen en escala de grises
-# plt.title('Tortuga 1')  # Títul que se mostrará
-# plt.axis('off')  # Oculta los ejes
+# Despliegue de imagenes
+plt.figure(figsize=(10, 5))  # Ajusta el tamaño de la figura
+plt.subplot(1, 2, 1)  # Define que en la pantalla se mostrarán una fila y dos columnas
+plt.imshow(img, cmap='gray')  # Muestra la imagen en escala de grises
+plt.title('Tortuga 1')  # Títul que se mostrará
+plt.axis('off')  # Oculta los ejes
 
-# plt.subplot(1, 2, 2)  
-# plt.imshow(img2, cmap='gray')  
-# plt.title('Tortuga 2')  
-# plt.axis('off')  
+plt.subplot(1, 2, 2)  
+plt.imshow(img2, cmap='gray')  
+plt.title('Tortuga 2')  
+plt.axis('off')  
 
-# # Muestra ambas imagenes en una ventana
-# plt.show()  
+# Muestra ambas imagenes en una ventana
+plt.show()  
 
 # b) Aplique los filtros de media, mediana y gaussiano vistos en clases (con el menor suavizado
 # posible para reducir el ruido), a cada imagen. Despliegue los resultados de cada imagen en
@@ -88,40 +88,40 @@ plt.show()
 # convolución, aplíquelas por separado sobre las imágenes originales en escala de grises. Mues-
 # tre los resultados en subplots. Comente los resultados obtenidos. 
 
-# # Se crea matriz de unos de 3x3
-# size_kernel = 3
-# kernel = np.ones((size_kernel,size_kernel), dtype = np.float64)
-# # Se crea matriz de unos de 5x5
-# size_kernel2 = 5
-# kernel2 = np.ones((size_kernel2,size_kernel2), dtype = np.float64)
+# Se crea matriz de unos de 3x3
+size_kernel = 3
+kernel = np.ones((size_kernel,size_kernel), dtype = np.float64)
+# Se crea matriz de unos de 5x5
+size_kernel2 = 5
+kernel2 = np.ones((size_kernel2,size_kernel2), dtype = np.float64)
 
-# # Se realiza el filtro de la convolucion con el comando signal.convolve2d y se convolucionan las imagenes con la matrices creadas
-# conv1 = signal.convolve2d(img, kernel, boundary='symm', mode='same') 
-# conv2 = signal.convolve2d(img, kernel2, boundary='symm', mode='same') 
-# conv3 = signal.convolve2d(img2, kernel, boundary='symm', mode='same') 
-# conv4 = signal.convolve2d(img2, kernel2, boundary='symm', mode='same') 
+# Se realiza el filtro de la convolucion con el comando signal.convolve2d y se convolucionan las imagenes con la matrices creadas
+conv1 = signal.convolve2d(img, kernel, boundary='symm', mode='same') 
+conv2 = signal.convolve2d(img, kernel2, boundary='symm', mode='same') 
+conv3 = signal.convolve2d(img2, kernel, boundary='symm', mode='same') 
+conv4 = signal.convolve2d(img2, kernel2, boundary='symm', mode='same') 
 
-# # Configuración de la figura de Matplotlib para mostrar las imágenes
-# fig, axs = plt.subplots(2, 2, figsize=(10, 10))
+# Configuración de la figura de Matplotlib para mostrar las imágenes
+fig, axs = plt.subplots(2, 2, figsize=(10, 10))
 
-# # Mostrar imágenes de la primera tortuga
-# axs[0, 0].imshow(conv1, cmap='gray')
-# axs[0, 0].set_title('Convolución 3x3 Tortuga 1')
-# axs[0, 1].imshow(conv2, cmap='gray')
-# axs[0, 1].set_title('Convolución 5x5 Tortuga 1')
+# Mostrar imágenes de la primera tortuga
+axs[0, 0].imshow(conv1, cmap='gray')
+axs[0, 0].set_title('Convolución 3x3 Tortuga 1')
+axs[0, 1].imshow(conv2, cmap='gray')
+axs[0, 1].set_title('Convolución 5x5 Tortuga 1')
 
-# # Mostrar imágenes de la segunda tortuga
-# axs[1, 0].imshow(conv3, cmap='gray')
-# axs[1, 0].set_title('Convolución 3x3 Tortuga 2')
-# axs[1, 1].imshow(conv4, cmap='gray')
-# axs[1, 1].set_title('Convolución 5x5 Tortuga 2')
+# Mostrar imágenes de la segunda tortuga
+axs[1, 0].imshow(conv3, cmap='gray')
+axs[1, 0].set_title('Convolución 3x3 Tortuga 2')
+axs[1, 1].imshow(conv4, cmap='gray')
+axs[1, 1].set_title('Convolución 5x5 Tortuga 2')
 
-# # Ocultar ejes
-# for ax in axs.flat:
-#     ax.axis('off')
+# Ocultar ejes
+for ax in axs.flat:
+    ax.axis('off')
 
-# # Mostrar las tortugas
-# plt.show()
+# Mostrar las tortugas
+plt.show()
 
 # ¿Qué efecto realizaron las máscaras de convolución sobre el ruido de las imágenes?
 # Las máscaras de convolución suavizan y eliminan el ruido de las imagenes, dependiendo del kernel que se utilice 
@@ -200,14 +200,13 @@ plt.imshow(tortuga_rgb)
 plt.axis('off')  # Oculta los ejes
 plt.show()
 
-
 # f) Aplicando umbralización adaptativa a la imagen filtrada, genere una imagen donde solo se muestre el contorno de la tortuga y desplieguela
 
-# # Aplicamos umbralización adaptativa a la imagen filtrada
-# img_umbral = cv2.adaptiveThreshold(img_mediana, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 13, 9) 
+# Aplicamos umbralización adaptativa a la imagen filtrada
+img_umbral = cv2.adaptiveThreshold(img_mediana, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 13, 9) 
 
-# # Desplegamos la imagen umbralizada
-# plt.imshow(img_umbral, cmap='gray')
-# plt.title('Imagen umbralizada')
-# plt.axis('off')
-# plt.show()
+# Desplegamos la imagen umbralizada
+plt.imshow(img_umbral, cmap='gray')
+plt.title('Imagen umbralizada')
+plt.axis('off')
+plt.show()
