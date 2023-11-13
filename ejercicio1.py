@@ -2,7 +2,6 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy import signal
 from skimage import filters
 
 #Parte 1.A
@@ -40,7 +39,7 @@ window_size = (7, 7)  # Ajusta del tamaño
 # Crear el filtro de media
 filtro_media = np.ones(window_size, dtype=np.float32) / (window_size[0] * window_size[1])
 
-# Aplicar el filtro de media a la región que deseas suavizar
+# Aplicar el filtro de media a la región que se desea suavizar
 region_suavizada = cv2.filter2D(region_to_smooth, -1, filtro_media)
 
 # Combinar la región suavizada con el resto de la imagen original
@@ -54,7 +53,7 @@ plt.title('Imagen original')
 
 plt.subplot(1, 2, 2)
 plt.imshow(cv2.cvtColor(imagen_resultante, cv2.COLOR_BGR2RGB))
-plt.title('Imagen numeros con marca de agua suavizada')
+plt.title('Marca de agua suavizada')
 
 plt.show()
 
