@@ -145,7 +145,57 @@ plt.show()
 # la mascara y el fondo por separado a los canales de una imagen RGB utilizando el comando
 # np.dstack(R,G,B), para unificar distintos canales en una sola imagen.
 
-# Crear la máscara invertida
-# mascara_invertida = 255 - mascara_completa
+# Cargar la imagen original
+img_original = cv2.imread('eye.jpg')
 
+# Convertir la imagen a blanco y negro
+img_bn = cv2.cvtColor(img_original, cv2.COLOR_BGR2GRAY)
 
+# Invertir la máscara para que los vasos sanguíneos sean negros (0)
+mascara_invertida = cv2.bitwise_not(mascara_completa)
+
+# Aplicar la máscara invertida a la imagen en blanco y negro
+img_bn_con_vasos_negros = cv2.min(img_bn, mascara_invertida)
+
+# Aplicar desenfoque Gaussiano a la imagen 
+img_bn_desenfocada = cv2.GaussianBlur(img_bn_con_vasos_negros, (21, 21), 0)
+
+# Convertir la imagen original a tonos de azul
+img_azul = img_original.copy()
+img_azul[:, :, 1] = 0  # Eliminar canal verde
+img_azul[:, :, 2] = 0  # Eliminar canal rojo
+
+# Aplicar desenfoque Gaussiano a la imagen azul
+img_azul_desenfocada = cv2.GaussianBlur(img_azul, (21, 21), 0)
+
+# Crear una máscara para los vasos sanguíneos con un verde intenso
+mascara_verde = np.zeros_like(img_original)
+# Establecer el canal verde a la máscara completa donde sea mayor a cero
+mascara_verde[mascara_completa > 0] = [0, 255, 0]
+
+# Aplicar la máscara verde sobre la imagen azul desenfocada
+img_final = img_azul_desenfocada.copy()
+img_final[mascara_completa > 0] = [0, 255, 0]
+
+# Mostrar el proceso en tres pasos
+plt.figure(figsize=(15, 5))
+
+# Imagen original en blanco y negro con vasos en negro
+plt.subplot(1, 3, 1)
+plt.imshow(img_bn_con_vasos_negros, cmap='gray')
+plt.title('Imagen EYE Complemento')
+plt.axis('off')
+
+# Imagen desenfocada en blanco y negro con vasos en negro
+plt.subplot(1, 3, 2)
+plt.imshow(img_bn_desenfocada, cmap='gray')
+plt.title('Imagen EYE Suavizado')
+plt.axis('off')
+
+# Imagen final con fondo azul y venas/arterias en verde
+plt.subplot(1, 3, 3)
+plt.imshow(cv2.cvtColor(img_final, cv2.COLOR_BGR2RGB))
+plt.title('Imagen EYE suavizada RGB con vasos destacados')
+plt.axis('off')
+
+plt.show()
